@@ -6,11 +6,11 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: Unproffesional Honesty
+title: Unprofessional Honesty
 description: A highly personal series of posts that will hopefully last longer than a month. I hope to talk about things I've learned and my progress as I transition into a professional.
 github_username: PrplHrt
 # you can comment the below line out if your repo name is not different than your baseurl
-github_repo: "Unproffesional-Honesty"
+github_repo: "Unprofessional-Honesty"
 
 # OPTIONAL: override baseurl and url if using a custom domain
 # Note: leave out the trailing / from this value. 
@@ -34,7 +34,7 @@ url: "https://PrplHrt.github.io" # the base hostname & protocol for your site, e
 #
 # 3. You must replace the parameter `baseurl` in _action_files/settings.ini with the same value as you set here but WITHOUT QUOTES.
 #
-baseurl: "/Unproffesional-Honesty" # the subpath of your site, e.g. "/blog".
+baseurl: "/Unprofessional-Honesty" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
 minima:
