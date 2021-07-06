@@ -6,8 +6,8 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: fastpages
-description: An easy to use blogging platform with support for Jupyter Notebooks.
+title: Unproffesional Honesty
+description: A highly personal series of posts that will hopefully last longer than a month. I hope to talk about things I've learned and my progress as I transition into a professional.
 github_username: PrplHrt
 # you can comment the below line out if your repo name is not different than your baseurl
 github_repo: "Unproffesional-Honesty"
@@ -39,8 +39,10 @@ baseurl: "/Unproffesional-Honesty" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: fastdotai
-    github: fastai
+    email: eyad.azim@protonmail.com
+ #   twitter: 
+    github: PrplHrt
+    
 
 # Set this to true to get LaTeX math equation support
 use_math: 
