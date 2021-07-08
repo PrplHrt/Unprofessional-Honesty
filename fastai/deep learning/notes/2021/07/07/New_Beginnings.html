@@ -174,21 +174,21 @@ window.onload = wrap_img;
 </h3>
 <p><em>The following notes cover the code featured in the jupyter notebooks featured in fastai's <a href="https://course.fast.ai/">Practical Deep Learning for Coders</a>.</em></p>
 <p>This code is from the <a href="https://colab.research.google.com/github/fastai/fastbook/blob/master/01_intro.ipynb">first chapter</a> of the course.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">PETS</span><span class="p">)</span><span class="o">/</span><span class="s1">'images'</span>
 
-<pre><code>from fastai.vision.all import *
-path = untar_data(URLs.PETS)/'images'
+<span class="k">def</span> <span class="nf">is_cat</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">ImageDataLoaders</span><span class="o">.</span><span class="n">from_name_func</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">,</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">valid_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">label_func</span><span class="o">=</span><span class="n">is_cat</span><span class="p">,</span> <span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">224</span><span class="p">))</span>
 
-def is_cat(x): return x[0].isupper()
-dls = ImageDataLoaders.from_name_func(
-    path, get_image_files(path), valid_pct=0.2, seed=42,
-    label_func=is_cat, item_tfms=Resize(224))
-
-learn = cnn_learner(dls, resnet34, metrics=error_rate)
-learn.fine_tune(1)</code></pre>
+<span class="n">learn</span> <span class="o">=</span> <span class="n">cnn_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet34</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">error_rate</span><span class="p">)</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
 <p>This block of code, as a whole, creates a deep learning model that can differentiate between cats and dogs. By breaking it down, we can learn a little more about how to write our own code.</p>
-
-<pre><code>from fastai.vision.all import *
-path = untar_data(URLs.PETS)/'images'</code></pre>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">PETS</span><span class="p">)</span><span class="o">/</span><span class="s1">'images'</span>
+</pre></div>
 <p>The above lines of code import all the needed code and  returns a path object with the location of the downloaded and extracted dataset, respectively. The rest of the code will be explored in the next sections.</p>
 
 </div>
@@ -200,12 +200,13 @@ path = untar_data(URLs.PETS)/'images'</code></pre>
 <h4 id="ImageDataLoaders">
 <a class="anchor" href="#ImageDataLoaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>ImageDataLoaders<a class="anchor-link" href="#ImageDataLoaders"> </a>
 </h4>
-<pre><code>dls = ImageDataLoaders.from_name_func(
-          path, get_image_files(path), 
-          valid_pct=0.2, seed=42,
-          label_func=is_cat, 
-          item_tfms=Resize(224)
-      )</code></pre>
+<div class="highlight"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">ImageDataLoaders</span><span class="o">.</span><span class="n">from_name_func</span><span class="p">(</span>
+          <span class="n">path</span><span class="p">,</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> 
+          <span class="n">valid_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+          <span class="n">label_func</span><span class="o">=</span><span class="n">is_cat</span><span class="p">,</span> 
+          <span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+      <span class="p">)</span>
+</pre></div>
 <p>The above code is where we tell fastai about the data we will be supplying. <code>dls</code> tells fastai what kind of dataset we have and how it's structured. <code>dls</code> is what we call a DataLoaders object, we'll get more into that in another post.</p>
 <ul>
 <li>
@@ -233,6 +234,7 @@ path = untar_data(URLs.PETS)/'images'</code></pre>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
     <strong>Note: </strong>We can also have batch transforms which apply to groups of items at once. These can be done on GPUs to be done in parallel (pretty fast).
+
 </div>
 
 </div>
@@ -244,7 +246,8 @@ path = untar_data(URLs.PETS)/'images'</code></pre>
 <h4 id="Convoluted-Neural-Networks-(CNNs)">
 <a class="anchor" href="#Convoluted-Neural-Networks-(CNNs)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convoluted Neural Networks (CNNs)<a class="anchor-link" href="#Convoluted-Neural-Networks-(CNNs)"> </a>
 </h4>
-<pre><code>learn = cnn_learner(dls, resnet34, metrics=error_rate)</code></pre>
+<div class="highlight"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">cnn_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet34</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">error_rate</span><span class="p">)</span>
+</pre></div>
 <p>The above code tells fastai to create a Convoluted Neural Network (CNN) using the resnet34 architecture - 34 is the number of layers in the CNN.</p>
 <p>The metrics are values that represent the performance of the CNN at the end of every epoch (when the network goes through the data once). The metrics are not to be confused with the loss of a neural network. Loss is a function that changes with any change in the parameters used in the network; meanwhile, metrics don't always change with a change in parameter. In this case, the metric used is <code>error_rate</code> which returns the percentage of validation items mislabeled by the CNN. An alternative metric is the <code>accuracy</code> which returns the percentage labeled correct (1 - <code>error_rate</code>).</p>
 <p>The function, <code>cnn_learner</code>, also has a parameter called <code>pretrained</code> that defaults to <code>True</code>. This parameter tells fastai to use the weights of previously created models. This starts off with a pretty capable model with the last layer (or head) of the previous model replaced with random parameters. Now we only need to run the line <code>learn.fine_tune(1)</code> which modifies the network to meet our needs.</p>
@@ -253,6 +256,7 @@ path = untar_data(URLs.PETS)/'images'</code></pre>
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>Finetuning a model (also called transfer learning) reminds me of how some people often transfer their skills from one field to another. It might help to think of it that way.
+
 </div>
 
 </div>
