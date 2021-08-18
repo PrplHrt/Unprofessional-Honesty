@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Hamming Codes | Unprofessional Honesty</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Hamming Codes" />
+<meta name="author" content="Eyad Mohamed Ali" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Notes and code after watching 3Blue1Brown’s Hamming code videos." />
+<meta property="og:description" content="Notes and code after watching 3Blue1Brown’s Hamming code videos." />
+<link rel="canonical" href="https://prplhrt.github.io/Unprofessional-Honesty/python/personal%20projects/2021/08/17/_08_18_Hamming_Codes.html" />
+<meta property="og:url" content="https://prplhrt.github.io/Unprofessional-Honesty/python/personal%20projects/2021/08/17/_08_18_Hamming_Codes.html" />
+<meta property="og:site_name" content="Unprofessional Honesty" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-17T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Notes and code after watching 3Blue1Brown’s Hamming code videos.","url":"https://prplhrt.github.io/Unprofessional-Honesty/python/personal%20projects/2021/08/17/_08_18_Hamming_Codes.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://prplhrt.github.io/Unprofessional-Honesty/python/personal%20projects/2021/08/17/_08_18_Hamming_Codes.html"},"headline":"Hamming Codes","dateModified":"2021-08-17T00:00:00-05:00","datePublished":"2021-08-17T00:00:00-05:00","author":{"@type":"Person","name":"Eyad Mohamed Ali"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Unprofessional-Honesty/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://prplhrt.github.io/Unprofessional-Honesty/feed.xml" title="Unprofessional Honesty" /><link rel="shortcut icon" type="image/x-icon" href="/Unprofessional-Honesty/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Unprofessional-Honesty/">Unprofessional Honesty</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Unprofessional-Honesty/about/">About Me</a><a class="page-link" href="/Unprofessional-Honesty/search/">Search</a><a class="page-link" href="/Unprofessional-Honesty/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Hamming Codes</h1><p class="page-description">Notes and code after watching 3Blue1Brown's Hamming code videos.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-08-17T00:00:00-05:00" itemprop="datePublished">
+        Aug 17, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Eyad Mohamed Ali</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Unprofessional-Honesty/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Unprofessional-Honesty/categories/#personal projects">personal projects</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/PrplHrt/Unprofessional-Honesty/tree/master/_notebooks/2021_08_18_Hamming_Codes.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Unprofessional-Honesty/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/PrplHrt/Unprofessional-Honesty/master?filepath=_notebooks%2F2021_08_18_Hamming_Codes.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Unprofessional-Honesty/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/PrplHrt/Unprofessional-Honesty/blob/master/_notebooks/2021_08_18_Hamming_Codes.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Unprofessional-Honesty/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021_08_18_Hamming_Codes.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Youtube-&amp;-Codes">Youtube &amp; Codes<a class="anchor-link" href="#Youtube-&amp;-Codes"> </a></h1><p>Today, while mindlessly looking at my Youtube home page, I stumbled upon a couple of videos by Grant Sanderson on his channel <a href="https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw">3Blue1Brown</a>. Sanderson introduces the concept in a way that lets the viewer rediscover Hamming's methodology. I highly recommend watching the videos yourself to understand the contents of this post.
+
+<center>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/X8jsijhllIA" frameborder="0" allowfullscreen=""></iframe>
+</center>
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After watching both videos, I felt inspired to try out the code that Sanderson displayed in the <a href="https://youtu.be/b3NxrZOu_CE">second video</a>. I created a simple Python code that first produces a random message comprised of 1s and 0s. The code then takes the generated message and changes the appropriate parity bits. The resulting message will then become a no-error version of the original. Below is the final, commented-version of the code:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p><div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="c1"># When running this locally, you will need numpy installed https://numpy.org/install/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Printing method that prints out the message in a square</span>
+<span class="k">def</span> <span class="nf">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">row_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bit</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">row_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">()</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">row_size</span>
+    
+
+<span class="k">def</span> <span class="nf">apply_parity</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="c1"># Find which parity bits need to be changed</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="k">if</span> <span class="n">bit</span><span class="p">])</span>
+    <span class="c1"># Removing the &quot;0b&quot; that python generates</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">ans</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resulting binary from the XOR operation: &quot;</span><span class="p">,</span> <span class="n">bits</span><span class="p">)</span>
+    
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Iterate through the binary in reverse to access bit 1, 2, 4, and so on...</span>
+    <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="c1"># If this bit was marked to be swapped by the XOR function, we change it</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">bit</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changing bit #&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot; from &quot;</span><span class="p">,</span>  <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot; to &quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span>  <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">])</span>
+        <span class="c1"># Using i to keep track of the parity bit we&#39;re at</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Simple formula to use the 0th element to keep an even number of 1s</span>
+    <span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">-</span> <span class="n">message</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">%</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># For debugging purposes (Makes sure that the same numbers appear each time)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;Pick size:</span>
+<span class="sd">        1. 4 bits</span>
+<span class="sd">        2. 16 bits</span>
+<span class="sd">        3. 64 bits</span>
+<span class="sd">        4. 256 bits</span>
+<span class="sd">            </span>
+<span class="sd">    Choice: &quot;&quot;&quot;</span><span class="p">))</span>
+            <span class="c1"># Makes sure option is within limits</span>
+            <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please limit yourself to options 1 to 4&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># In case non integer is entered into the terminal</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please try again!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get a random list of 1s and 0s</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial message:&quot;</span><span class="p">)</span>
+    <span class="n">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="c1"># Applying the right parity bits</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">apply_parity</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After parity applied:&quot;</span><span class="p">)</span>
+    <span class="n">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+</p>
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Pick size:
+        1. 4 bits
+        2. 16 bits
+        3. 64 bits
+        4. 256 bits
+            
+    Choice: 2
+Initial message:
+0 1 0 0 
+0 1 0 0 
+0 1 0 0 
+0 0 1 0 
+Resulting binary from the XOR operation:  11
+Changing bit # 1  from  1  to  0
+Changing bit # 2  from  0  to  1
+After parity applied:
+0 0 1 0 
+0 1 0 0 
+0 1 0 0 
+0 0 1 0 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, I decided to add a function that would create an error in the message and another function to rectify that error. The former would randomly select a bit and change its value. The latter would use the same XOR method in "apply_parity" to identify the bit causing the error, then fix it. Below are the two additional functions:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">rand_error</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changing bit #&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="s2">&quot; from &quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">],</span> <span class="s2">&quot; to &quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span> <span class="ow">not</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]))</span>
+    <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]</span>  <span class="o">=</span> <span class="ow">not</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">message</span>
+
+<span class="c1"># Fixing the faulty bit</span>
+<span class="k">def</span> <span class="nf">fix_error</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="c1"># Find the faulty bit</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="k">if</span> <span class="n">bit</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changing bit #&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="s2">&quot; from &quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">],</span> <span class="s2">&quot; to &quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span> <span class="ow">not</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]))</span>
+    <span class="c1"># Change the bit</span>
+    <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]</span>  <span class="o">=</span> <span class="ow">not</span> <span class="n">message</span><span class="p">[</span><span class="n">error</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># For debugging purposes (Makes sure that the same numbers appear each time)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span>
+<span class="sd">&quot;&quot;&quot;Pick size:</span>
+<span class="sd">        1. 4 bits</span>
+<span class="sd">        2. 16 bits</span>
+<span class="sd">        3. 64 bits</span>
+<span class="sd">        4. 256 bits</span>
+<span class="sd">            </span>
+<span class="sd">    Choice: &quot;&quot;&quot;</span><span class="p">))</span>
+            <span class="c1"># Makes sure option is within limits</span>
+            <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please limit yourself to options 1 to 4&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># In case non integer is entered into the terminal</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please try again!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get a random list of 1s and 0s</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># Applying the right parity bits</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">apply_parity</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before Error:&quot;</span><span class="p">)</span>
+    <span class="n">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="c1"># Adding an error into the message</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adding an error:&quot;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">rand_error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fixing the error:&quot;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">fix_error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">print_block</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Pick size:
+        1. 4 bits
+        2. 16 bits
+        3. 64 bits
+        4. 256 bits
+            
+    Choice: 2
+Resulting binary from the XOR operation:  11
+Changing bit # 1  from  1  to  0
+Changing bit # 2  from  0  to  1
+Before Error:
+0 0 1 0 
+0 1 0 0 
+0 1 0 0 
+0 0 1 0 
+Adding an error:
+Changing bit # 3  from  0  to  1
+0 0 1 1 
+0 1 0 0 
+0 1 0 0 
+0 0 1 0 
+Fixing the error:
+Changing bit # 3  from  1  to  0
+0 0 1 0 
+0 1 0 0 
+0 1 0 0 
+0 0 1 0 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Theoretically, these functions should work for any squared number of bits. I've only limited the number to 4 options in the code for the sake of having a readable output. All of the code is compiled into one file on my GitHub, this is the <a href="https://github.com/PrplHrt/Hamming_Code.git">repo link</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="PrplHrt/Unprofessional-Honesty"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Unprofessional-Honesty/python/personal%20projects/2021/08/17/_08_18_Hamming_Codes.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Unprofessional-Honesty/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Unprofessional-Honesty/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Unprofessional-Honesty/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A highly personal series of posts that will hopefully last longer than a month. I hope to talk about things I&#39;ve learned and my progress as I transition into a professional.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/PrplHrt" title="PrplHrt"><svg class="svg-icon grey"><use xlink:href="/Unprofessional-Honesty/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
